@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Get Bitcoin Price with Time</title>
+</head>
+<body>
+    <h1>Bitcoin Price and Current Time</h1>
+    <p id="price">Click the button to get the price and time</p>
+    <button id="getPriceButton">Get Bitcoin Price</button>
+
+    <script>
+        // Function to fetch Bitcoin price from CoinGecko API
+        function getBitcoinPrice() {
+            // Replace 'YOUR_API_KEY' with your actual API key if required
+            const apiKey = 'bitcoin';
+            const url = `https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd&apiKey=${apiKey}`;
+
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    const bitcoinPrice = data.bitcoin.usd;
+                    const currentTime = new Date();
+                    const formattedTime = currentTime.toLocaleTimeString();
+                    document.getElementById('price').textContent = `Current Bitcoin Price: $${bitcoinPrice} (as of ${formattedTime})`;
+                })
+                .catch(error => {
+                    console.error('Error fetching data:', error);
+                });
+        }
+
+        document.getElementById('getPriceButton').addEventListener('click', getBitcoinPrice);
+    </script>
+</body>
+</html>
